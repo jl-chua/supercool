@@ -4,7 +4,7 @@ import web3 from './web3';
 import superCool from './superCool';
 import Feature from './Feature';
 import featureData from './featureData';
-import Story from './Story';
+//import Story from './Story';
 
 console.log(web3.version);
 
@@ -14,9 +14,8 @@ function App() {
   const [balance, setBalance] = useState('0');
 
   const [features] = useState(featureData);
-  const [featureLink, setFeatureLink] = useState("./images/wheel.png");
+  const [featureLink, setFeatureLink] = useState("./images/main.png");
  
-
   
   const getAddress = async () => {
     const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
@@ -39,9 +38,9 @@ function App() {
  //console.log(account);
 
 
-  const featureHandler = () => {
+  const setFeatureLinkHandler = () => {
     setFeatureLink("./images/insurance.png")
-  }
+   }
 
   return (
     <div className="App">
@@ -51,13 +50,16 @@ function App() {
 
     <button onClick = {tokenHandler} >Tokens</button>
 
-    <Feature onClick={featureHandler} features={features} ></Feature>
+    <Feature setFeatureLink={()=> setFeatureLinkHandler()} features={features} ></Feature>
     {/* <Story featureLink={featureLink}></Story> */}
+
 
     <div>
       <img alt="story" src={featureLink} width="428" />
     </div>
   
+
+
     </div>
   );
 }

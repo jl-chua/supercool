@@ -1,12 +1,7 @@
 import React from 'react';
 
-const Feature = ({features}) => {
+const Feature = ({features, setFeatureLink}) => {
 
-    let link;
-
-    const onClickHandler = () => {
-        link = "abc"
-    };
 
     return(
         <div>
@@ -23,7 +18,7 @@ const Feature = ({features}) => {
                             className='icon'
                             height="50" 
                             width="50"
-                            onClick = {onClickHandler}
+                            onClick = {() => setFeatureLink()}
                             />
 
                             <p>{title}</p>
