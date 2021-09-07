@@ -1,3 +1,17 @@
+# Purpose
+
+This is a project for NUS PC3, purpose is to connect metamask/eth to frontend.
+
+In PC2, the code was done in HTML and vanilla JS.
+In PC3, the code has been refactored to React.
+
+This PC3 code is mainly focusing on connecting metamask/eth to frontend, 
+to see the full functionallity of the app, please go to the repo for PC2:
+https://github.com/matt-wacky/FarmAnywherelah-
+
+
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
