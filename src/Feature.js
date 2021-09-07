@@ -7,7 +7,7 @@ const Feature = ({features, setFeatureLink}) => {
         <div>
 
             {features.map((feature)=> {
-                const {id, title, img} = feature;
+                const {id, title, img, featureLink} = feature;
 
                 return (
                     <div key={id} className='feature'>
@@ -18,7 +18,7 @@ const Feature = ({features, setFeatureLink}) => {
                             className='icon'
                             height="50" 
                             width="50"
-                            onClick = {() => setFeatureLink()}
+                            onClick = {() => setFeatureLink({featureLink})}
                             />
 
                             <p>{title}</p>

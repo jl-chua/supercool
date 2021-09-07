@@ -1,9 +1,10 @@
 import './App.css';
 import React, {useState, useEffect} from "react";
 import web3 from './web3';
-import superCool from './superCool';
+import harvest from './harvest';
 import Feature from './Feature';
 import featureData from './featureData';
+import Coins from './Coins'
 //import Story from './Story';
 
 console.log(web3.version);
@@ -11,7 +12,8 @@ console.log(web3.version);
 function App() {
 
   const [account, setAccount] = useState('');
-  const [balance, setBalance] = useState('0');
+  const [balance, setBalance] = useState('-');
+  const [show, setShow] = useState(false);
 
   const [features] = useState(featureData);
   const [featureLink, setFeatureLink] = useState("./images/main.png");
@@ -23,7 +25,7 @@ function App() {
   }
 
   const getBalance = async () => {
-    const balanceRes = await superCool.methods.balanceOf(account).call();
+    const balanceRes = await harvest.methods.balanceOf(account).call();
     setBalance(balanceRes);
   }
 
@@ -31,35 +33,42 @@ function App() {
     getAddress();
   }, []);
   
+ 
   const tokenHandler = () => {
+    setShow(true);
     getBalance();
   };
-  
+
  //console.log(account);
 
-
   const setFeatureLinkHandler = () => {
-    setFeatureLink("./images/insurance.png")
-   }
+    setFeatureLink("./images/insurance.png");
+
+   };
+
 
   return (
     <div className="App">
 
-    <p>Account: {account} </p>
-    <p>Balance: {balance} SPC</p>
+      <p style={{color: "grey"}}> Account: </p>
+      {show?<p>{account}</p>:null}
+      <p> <span style={{color: "grey"}}> Balance: </span> {balance} <span style={{color: "grey"}}> HAV </span> </p>
 
-    <button onClick = {tokenHandler} >Tokens</button>
+      <div className='user-container'>
+        <img className='user-icon' alt="profile" src ="./images/Brad1.png" height="50" width="50"/>
+      <button className='user-icon' onClick = {tokenHandler} >Harvest Tokens</button>
+    </div>
+    
+    <Coins/>
 
-    <Feature setFeatureLink={()=> setFeatureLinkHandler()} features={features} ></Feature>
+    <Feature setFeatureLink={()=> setFeatureLinkHandler()} features={features} />
+
     {/* <Story featureLink={featureLink}></Story> */}
-
 
     <div>
       <img alt="story" src={featureLink} width="428" />
     </div>
   
-
-
     </div>
   );
 }
