@@ -3,13 +3,13 @@ const featureData = [
       id: 1,
       title: 'water',
       img: './images/icon_water.png',
-      featureLink: "./images/water.png",
+      featureLink: './images/water.png',
     },
     {
         id: 2,
         title: 'fertilzer',
         img: './images/icon_fertilizer.jpg',
-        featureLink: '',
+        featureLink: './images/icon_fertilizer.jpg',
       },
     {
         id: 3,
@@ -21,19 +21,19 @@ const featureData = [
       id: 4,
       title: 'seed',
       img: './images/icon_seed.png',
-      featureLink: '',
+      featureLink: './images/main.png',
     },
     {
         id: 5,
         title: 'insurance',
         img: './images/icon_insurance2.jpg',
-        featureLink: "./images/insurance.png",
+        featureLink: './images/insurance.png',
       },
     {
         id: 6,
         title: 'soil',
         img: './images/soil2.png',
-        featureLink: '',
+        featureLink: './images/main.png',
     },
   
   ];

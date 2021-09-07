@@ -41,9 +41,8 @@ function App() {
 
  //console.log(account);
 
-  const setFeatureLinkHandler = () => {
-    setFeatureLink("./images/insurance.png");
-
+  const setFeatureLinkHandler = (link) => {
+    setFeatureLink(link);
    };
 
 
@@ -61,7 +60,7 @@ function App() {
     
     <Coins/>
 
-    <Feature setFeatureLink={()=> setFeatureLinkHandler()} features={features} />
+    <Feature setFeatureLink={setFeatureLinkHandler} features={features} />
 
     {/* <Story featureLink={featureLink}></Story> */}
 

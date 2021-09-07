@@ -18,7 +18,7 @@ const Feature = ({features, setFeatureLink}) => {
                             className='icon'
                             height="50" 
                             width="50"
-                            onClick = {() => setFeatureLink({featureLink})}
+                            onClick = {() => setFeatureLink(featureLink)}
                             />
 
                             <p>{title}</p>
