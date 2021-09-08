@@ -1,11 +1,10 @@
 import './App.css';
 import React, {useState, useEffect} from "react";
 import web3 from './web3';
-import harvest from './harvest';
+import har from './harvest';
 import Feature from './Feature';
 import featureData from './featureData';
-import Coins from './Coins'
-//import Story from './Story';
+import Coins from './Coins';
 
 console.log(web3.version);
 
@@ -16,8 +15,11 @@ function App() {
   const [show, setShow] = useState(false);
 
   const [features] = useState(featureData);
-  const [featureLink, setFeatureLink] = useState("./images/main.png");
- 
+  const [featureOnClick, setFeatureOnClick] = useState("./images/main.png");
+
+  let [gold, setGold] = useState(100);
+  let [harvest, setHarvest] = useState(500);
+  let [insuranceQty,setInsuranceQty] = useState(0); 
   
   const getAddress = async () => {
     const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
@@ -25,8 +27,8 @@ function App() {
   }
 
   const getBalance = async () => {
-    const balanceRes = await harvest.methods.balanceOf(account).call();
-    setBalance(balanceRes);
+    const balanceHavToken = await har.methods.balanceOf(account).call();
+    setBalance(balanceHavToken);
   }
 
   useEffect(()=> {
@@ -39,36 +41,87 @@ function App() {
     getBalance();
   };
 
- //console.log(account);
-
-  const setFeatureLinkHandler = (link) => {
-    setFeatureLink(link);
+  const featureOnClickHandler = (link) => {
+    setFeatureOnClick(link);
    };
 
 
+let hurricaneDamage = 200;
+
+  const hurricaneHandler = () => {
+    setFeatureOnClick('./images/hurricane.png');
+    setHarvest(harvest - hurricaneDamage);
+    if (insuranceQty>0) {
+      setGold(gold + 150);
+      setInsuranceQty(insuranceQty - 1);
+    }
+  };
+
+
+let insuranceCost = 5;
+let waterCost = 20;
+
+   const storyHandler = () => {
+    if (story.props.src === "./images/insurance.png") {
+      if (gold>0) {
+        var confirmBuy = window.confirm("Spend " + insuranceCost + " Gold to buy 1 insurance?");
+        if (confirmBuy === true) {
+            setGold(gold -= insuranceCost);
+            setInsuranceQty(insuranceQty + 1)
+        } else 
+        return null;
+      } else 
+      window.alert("You have insufficent Gold!");
+ 
+    } else if (story.props.src === "./images/water.png") {
+      if (gold>0) {
+        setHarvest(harvest + 20);
+        setGold(gold - waterCost);
+      } else 
+      window.alert("You have insufficent Gold!")
+    };
+   };
+
+let story;
+
+  console.log(gold," ", insuranceQty, " ", harvest);
+
   return (
+  <div className="App-container">
+
     <div className="App">
 
       <p style={{color: "grey"}}> Account: </p>
-      {show?<p>{account}</p>:null}
+      {show ? <p>{account}</p> : null}
       <p> <span style={{color: "grey"}}> Balance: </span> {balance} <span style={{color: "grey"}}> HAV </span> </p>
 
       <div className='user-container'>
         <img className='user-icon' alt="profile" src ="./images/Brad1.png" height="50" width="50"/>
-      <button className='user-icon' onClick = {tokenHandler} >Harvest Tokens</button>
-    </div>
+        <button className='user-icon' onClick = {tokenHandler} >Harvest Tokens</button>
+      </div>
     
-    <Coins/>
+      <Coins gold={gold} harvest={harvest}/>
 
-    <Feature setFeatureLink={setFeatureLinkHandler} features={features} />
+      <Feature setFeatureOnClick={featureOnClickHandler} features={features} />
 
-    {/* <Story featureLink={featureLink}></Story> */}
+      <div>
+        {story = <img onClick={storyHandler} alt="story" src={featureOnClick} width="428" /> }
+      </div>
 
-    <div>
-      <img alt="story" src={featureLink} width="428" />
-    </div>
+      {console.log(story.props.src)}
   
     </div>
+
+    <div className="dev-zone">
+      <p>developer zone only</p>
+      <br/>
+      <button onClick={hurricaneHandler} >hurricane</button>
+      <br/>
+      <br/>
+      This area is to simulate a hurricane
+    </div>
+
+  </div>
   );
 }
 

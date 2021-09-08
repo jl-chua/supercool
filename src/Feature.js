@@ -1,13 +1,13 @@
 import React from 'react';
 
-const Feature = ({features, setFeatureLink}) => {
+const Feature = ({features, setFeatureOnClick}) => {
 
 
     return(
         <div>
 
             {features.map((feature)=> {
-                const {id, title, img, featureLink} = feature;
+                const {id, title, img, onClicked} = feature;
 
                 return (
                     <div key={id} className='feature'>
@@ -18,7 +18,7 @@ const Feature = ({features, setFeatureLink}) => {
                             className='icon'
                             height="50" 
                             width="50"
-                            onClick = {() => setFeatureLink(featureLink)}
+                            onClick = {() => setFeatureOnClick(onClicked)}
                             />
 
                             <p>{title}</p>
