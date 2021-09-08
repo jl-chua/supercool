@@ -1,7 +1,7 @@
 import './App.css';
 import React, {useState, useEffect} from "react";
 import web3 from './web3';
-import har from './harvest';
+import HAV from './harvest';
 import Feature from './Feature';
 import featureData from './featureData';
 import Coins from './Coins';
@@ -27,7 +27,7 @@ function App() {
   }
 
   const getBalance = async () => {
-    const balanceHavToken = await har.methods.balanceOf(account).call();
+    const balanceHavToken = await HAV.methods.balanceOf(account).call();
     setBalance(balanceHavToken);
   }
 
@@ -62,9 +62,15 @@ let insuranceCost = 5;
 const waterCost = 20;
 const waterBenefit =20;
 
+  const sufficentGold = (itemCost) => {
+    if (gold>0 && gold-itemCost>-1) {
+      return true;
+    }
+  };
+
    const storyHandler = () => {
     if (story.props.src === "./images/insurance.png") {
-      if (gold>0 && gold-insuranceCost>-1) {
+      if (sufficentGold(insuranceCost)) {
         var confirmBuy = window.confirm("Spend " + insuranceCost + " Gold to buy 1 insurance?");
         if (confirmBuy === true) {
             setGold(gold -= insuranceCost);
@@ -75,10 +81,10 @@ const waterBenefit =20;
       window.alert("You have insufficent Gold!");
  
     } else if (story.props.src === "./images/water.png") {
-      if (gold>0 && gold-waterCost>-1) {
+      if (sufficentGold(waterCost)) {
         setHarvest(harvest + waterBenefit);
-        setGold(gold - waterCost);
-      } else 
+        setGold(gold - waterCost)
+      } else
       window.alert("You have insufficent Gold!")
     };
    };
