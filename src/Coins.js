@@ -7,10 +7,11 @@ const Coins = ({gold, harvest}) => {
         <div className='coin-container'>
             <img className='coin-icon' alt="gold" src ="./images/icon_gold.png" />
             <img className='coin-icon' alt="harvest" src ="./images/icon_harvest.png" />
-            <div style={{justifyContent: 'space-evenly', display: 'flex', color: 'grey'}}>
-                <div>{gold}</div>
+            <div className='coin-title'>
+                <div> {gold}</div>
                 <div>{harvest}</div>
-            </div>       
+            </div>  
+            <div style={{height:'5px'}}></div>     
         </div> 
     );
 };

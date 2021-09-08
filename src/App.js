@@ -59,11 +59,12 @@ let hurricaneDamage = 200;
 
 
 let insuranceCost = 5;
-let waterCost = 20;
+const waterCost = 20;
+const waterBenefit =20;
 
    const storyHandler = () => {
     if (story.props.src === "./images/insurance.png") {
-      if (gold>0) {
+      if (gold>0 && gold-insuranceCost>-1) {
         var confirmBuy = window.confirm("Spend " + insuranceCost + " Gold to buy 1 insurance?");
         if (confirmBuy === true) {
             setGold(gold -= insuranceCost);
@@ -74,8 +75,8 @@ let waterCost = 20;
       window.alert("You have insufficent Gold!");
  
     } else if (story.props.src === "./images/water.png") {
-      if (gold>0) {
-        setHarvest(harvest + 20);
+      if (gold>0 && gold-waterCost>-1) {
+        setHarvest(harvest + waterBenefit);
         setGold(gold - waterCost);
       } else 
       window.alert("You have insufficent Gold!")
