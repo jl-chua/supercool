@@ -20,7 +20,9 @@ function App() {
   let [gold, setGold] = useState(100);
   let [harvest, setHarvest] = useState(500);
   let [insuranceQty,setInsuranceQty] = useState(0); 
-  
+  let [feedBackMsg, setfeedBackMsg] = useState("");
+  //let [itemQty, setitemQty] = useState(0)
+
   const getAddress = async () => {
     const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
     setAccount(accounts[0])
@@ -43,24 +45,28 @@ function App() {
 
   const featureOnClickHandler = (link) => {
     setFeatureOnClick(link);
-   };
+    setfeedBackMsg();
+  };
 
 
-let hurricaneDamage = 200;
+  let hurricaneDamage = 200;
+  let insurancePayout = 150;
 
   const hurricaneHandler = () => {
     setFeatureOnClick('./images/hurricane.png');
     setHarvest(harvest - hurricaneDamage);
     if (insuranceQty>0) {
-      setGold(gold + 150);
+      setGold(gold + insurancePayout);
       setInsuranceQty(insuranceQty - 1);
-    }
+      setfeedBackMsg(`Lucky, you brought insurance. Payout is $${insurancePayout}.`)
+    } else
+    setfeedBackMsg(`You lost ${hurricaneDamage} harvest. NO payout as no insurance!`)
   };
 
 
-let insuranceCost = 5;
-const waterCost = 20;
-const waterBenefit =20;
+  let insuranceCost = 5;
+  const waterCost = 20;
+  const waterBenefit =20;
 
   const sufficentGold = (itemCost) => {
     if (gold>0 && gold-itemCost>-1) {
@@ -89,9 +95,22 @@ const waterBenefit =20;
     };
    };
 
-let story;
+  //  function pass () {
+  //   var insurQty = insuranceQty;
 
-  console.log(gold," ", insuranceQty, " ", harvest);
+  //   var params = new URLSearchParams();
+  //   params.append("insuranceQ",insurQty)
+
+  //   window.location.href = "featureData.js?" + params.toString();
+  //  };
+
+
+  //  useEffect(()=> {
+  //   pass();
+  // }, []);
+   
+
+  let story;
 
   return (
   <div className="App-container">
@@ -111,7 +130,11 @@ let story;
 
       <Feature setFeatureOnClick={featureOnClickHandler} features={features} />
 
-      <div>
+      <div> 
+        <p className='feedback-msg'>{feedBackMsg}</p>
+      </div>      
+
+      <div className='story'>
         {story = <img onClick={storyHandler} alt="story" src={featureOnClick} width="428" /> }
       </div>
 

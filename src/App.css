@@ -45,6 +45,7 @@ justify-content: center;
 
 .feature {
   margin: 2rem;
+  margin-top: 1.5rem;
   margin-bottom: 1px;
   display:inline-flex;
  
@@ -52,7 +53,13 @@ justify-content: center;
 
 .icon {
   border-radius: 50%;
-  padding: 5;
+  padding: 0;
+  margin: 0;
+}
+
+.icon-title{
+  margin: 3px;
+  color: #434549;
 }
 
 .coin-container {
@@ -88,6 +95,15 @@ justify-content: center;
   margin: 2px;
   margin-left: 10px;
   border: 3px;
+}
+
+.feedback-msg{
+  margin-top: 1.5rem;
+  height: 1rem;
+}
+
+.story{
+  margin-top: 2%;
 }
 
 .dev-zone {

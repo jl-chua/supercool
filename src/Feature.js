@@ -7,21 +7,29 @@ const Feature = ({features, setFeatureOnClick}) => {
         <div>
 
             {features.map((feature)=> {
-                const {id, title, img, onClicked} = feature;
+                const {id, title, img, onClicked, itemQty} = feature;
 
                 return (
                     <div key={id} className='feature'>
-                        <div className='icon'>
-                            <img 
-                            src={img} 
-                            alt={title} 
-                            className='icon'
-                            height="50" 
-                            width="50"
-                            onClick = {() => setFeatureOnClick(onClicked)}
-                            />
+                        <div>
+                            {/* <div style={{display:'flex'}} > */}
 
-                            <p>{title}</p>
+                                <img 
+                                src={img} 
+                                alt={title} 
+                                className='icon'
+                                height="50" 
+                                width="50"
+                                onClick = {() => setFeatureOnClick(onClicked)}
+                                />
+
+                                {/* <p style={{marginTop: '0', marginBottom: '1', backgroundColor: '', borderRadius:'50%' }}>
+                                {itemQty}
+                                </p> */}
+
+                            {/* </div> */}
+                        
+                                <p className='icon-title'>{title}</p>
 
                         </div>
 
