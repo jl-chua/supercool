@@ -21,7 +21,6 @@ function App() {
   let [harvest, setHarvest] = useState(500);
   let [insuranceQty,setInsuranceQty] = useState(0); 
   let [feedBackMsg, setfeedBackMsg] = useState("");
-  //let [itemQty, setitemQty] = useState(0)
 
   const getAddress = async () => {
     const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
@@ -57,8 +56,8 @@ function App() {
     setHarvest(harvest - hurricaneDamage);
     if (insuranceQty>0) {
       setGold(gold + insurancePayout);
-      setInsuranceQty(insuranceQty - 1);
-      setfeedBackMsg(`Lucky, you brought insurance. Payout is $${insurancePayout}.`)
+      setInsuranceQty(prevInsuranceQty => prevInsuranceQty - 1);
+      setfeedBackMsg(`Lucky, you brought insurance. Payout is ${insurancePayout} GOLD.`)
     } else
     setfeedBackMsg(`You lost ${hurricaneDamage} harvest. NO payout as no insurance!`)
   };
@@ -69,18 +68,18 @@ function App() {
   const waterBenefit =20;
 
   const sufficentGold = (itemCost) => {
-    if (gold>0 && gold-itemCost>-1) {
+    if (gold-itemCost>-1) {
       return true;
     }
   };
 
-   const storyHandler = () => {
+  const storyHandler = () => {
     if (story.props.src === "./images/insurance.png") {
       if (sufficentGold(insuranceCost)) {
         var confirmBuy = window.confirm("Spend " + insuranceCost + " Gold to buy 1 insurance?");
         if (confirmBuy === true) {
             setGold(gold -= insuranceCost);
-            setInsuranceQty(insuranceQty + 1)
+            setInsuranceQty(prevInsuranceQty => prevInsuranceQty + 1);
         } else 
         return null;
       } else 
@@ -93,22 +92,8 @@ function App() {
       } else
       window.alert("You have insufficent Gold!")
     };
-   };
+  };
 
-  //  function pass () {
-  //   var insurQty = insuranceQty;
-
-  //   var params = new URLSearchParams();
-  //   params.append("insuranceQ",insurQty)
-
-  //   window.location.href = "featureData.js?" + params.toString();
-  //  };
-
-
-  //  useEffect(()=> {
-  //   pass();
-  // }, []);
-   
 
   let story;
 
@@ -128,7 +113,7 @@ function App() {
     
       <Coins gold={gold} harvest={harvest}/>
 
-      <Feature setFeatureOnClick={featureOnClickHandler} features={features} />
+      <Feature setFeatureOnClick={featureOnClickHandler} features={features} insuranceQty={insuranceQty} />
 
       <div> 
         <p className='feedback-msg'>{feedBackMsg}</p>
@@ -138,7 +123,7 @@ function App() {
         {story = <img onClick={storyHandler} alt="story" src={featureOnClick} width="428" /> }
       </div>
 
-      {console.log(story.props.src)}
+      {/* {console.log(story.props.src)} */}
   
     </div>
 

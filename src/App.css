@@ -104,13 +104,14 @@ justify-content: center;
 
 .story{
   margin-top: 2%;
+  margin-bottom: 6%;
 }
 
 .dev-zone {
   margin: 100px;
   margin-top: 400px;
   width: 150px;
-  height: 150px;
+  height: 200px;
   border-style: solid;
   border-color: rgb(190, 187, 187);
   justify-content: center;

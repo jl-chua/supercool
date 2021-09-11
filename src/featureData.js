@@ -1,7 +1,3 @@
-// var params = new URLSearchParams(window.location.search);
-// var insurQty = params.get("insurQty");
-
-
 
 const featureData = [
   {
@@ -33,7 +29,6 @@ const featureData = [
     title: 'insurance',
     img: './images/icon_insurance2.jpg',
     onClicked: './images/insurance.png',
-    itemQty: 0,
     },
   {
     id: 6,
