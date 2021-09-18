@@ -4,7 +4,9 @@ import web3 from './web3';
 import HAV from './harvest';
 import Feature from './Feature';
 import featureData from './featureData';
-import Coins from './Coins';
+import Points from './Points';
+import db from "./firebase";
+import { collection, onSnapshot, query } from 'firebase/firestore';
 
 console.log(web3.version);
 
@@ -16,11 +18,29 @@ function App() {
 
   const [features] = useState(featureData);
   const [featureOnClick, setFeatureOnClick] = useState("./images/main.png");
+  const [player, setPlayer] = useState([{}]);
 
-  let [gold, setGold] = useState(100);
-  let [harvest, setHarvest] = useState(500);
+  useEffect(() => {
+    const q = query(collection(db, "users"));
+    const unsubscribe = onSnapshot(q, (querySnapshot) => {
+      setPlayer(
+        querySnapshot.docs.map(doc => ({...doc.data(), id: doc.id, }))
+      )
+    }); return unsubscribe
+  }, [])
+
+
+  let [gold, setGold] = useState(0);
+  let [harvest, setHarvest] = useState(0);
   let [insuranceQty,setInsuranceQty] = useState(0); 
-  let [feedBackMsg, setfeedBackMsg] = useState("");
+  const [feedBackMsg, setfeedBackMsg] = useState("");
+
+  
+  useEffect(() => {
+    setGold(player[0].goldpoint)
+    setHarvest(player[0].harvestpoint)
+  }, [player])
+  
 
   const getAddress = async () => {
     const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
@@ -48,14 +68,14 @@ function App() {
   };
 
 
-  let hurricaneDamage = 200;
-  let insurancePayout = 150;
+  const hurricaneDamage = 200;
+  const insurancePayout = 150;
 
   const hurricaneHandler = () => {
     setFeatureOnClick('./images/hurricane.png');
-    setHarvest(harvest - hurricaneDamage);
+    setHarvest(prevHarvest => prevHarvest - hurricaneDamage);
     if (insuranceQty>0) {
-      setGold(gold + insurancePayout);
+      setGold(prevGold => prevGold + insurancePayout);
       setInsuranceQty(prevInsuranceQty => prevInsuranceQty - 1);
       setfeedBackMsg(`Lucky, you brought insurance. Payout is ${insurancePayout} GOLD.`)
     } else
@@ -63,7 +83,7 @@ function App() {
   };
 
 
-  let insuranceCost = 5;
+  const insuranceCost = 5;
   const waterCost = 20;
   const waterBenefit =20;
 
@@ -78,7 +98,7 @@ function App() {
       if (sufficentGold(insuranceCost)) {
         var confirmBuy = window.confirm("Spend " + insuranceCost + " Gold to buy 1 insurance?");
         if (confirmBuy === true) {
-            setGold(gold -= insuranceCost);
+            setGold(prevGold => prevGold - insuranceCost);
             setInsuranceQty(prevInsuranceQty => prevInsuranceQty + 1);
         } else 
         return null;
@@ -87,12 +107,13 @@ function App() {
  
     } else if (story.props.src === "./images/water.png") {
       if (sufficentGold(waterCost)) {
-        setHarvest(harvest + waterBenefit);
-        setGold(gold - waterCost)
+        setHarvest(prevHarvest => prevHarvest + waterBenefit);
+        setGold(prevGold => prevGold - waterCost)
       } else
       window.alert("You have insufficent Gold!")
     };
   };
+
 
 
   let story;
@@ -111,7 +132,7 @@ function App() {
         <button className='user-icon' onClick = {tokenHandler} >Harvest Tokens</button>
       </div>
     
-      <Coins gold={gold} harvest={harvest}/>
+      <Points gold={gold}  harvest={harvest}/>
 
       <Feature setFeatureOnClick={featureOnClickHandler} features={features} insuranceQty={insuranceQty} />
 

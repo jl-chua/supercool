@@ -27,7 +27,7 @@ const Feature = ({features, setFeatureOnClick, insuranceQty}) => {
 
                             <div style={{display:'flex'}}>
                                 <p className='icon-title'>{title}</p>   
-                                <div style={{marginTop: '0', marginBottom: '2', borderRadius:'50%', color: 'blue', }}>
+                                <div style={{marginTop: '-3', marginBottom: '0', color: 'blue'}}>
                                     {(insuranceQty===0) ? null : (picture.props.alt === 'insurance') ? insuranceQty : null}  
                                 </div>    
                             </div>

@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Coins = ({gold, harvest}) => {
+const Points = ({gold, harvest}) => {
 
     return(
     
@@ -16,5 +16,5 @@ const Coins = ({gold, harvest}) => {
     );
 };
 
-export default Coins;
+export default Points;
 
