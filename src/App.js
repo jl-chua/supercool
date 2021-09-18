@@ -20,27 +20,12 @@ function App() {
   const [featureOnClick, setFeatureOnClick] = useState("./images/main.png");
   const [player, setPlayer] = useState([{}]);
 
-  useEffect(() => {
-    const q = query(collection(db, "users"));
-    const unsubscribe = onSnapshot(q, (querySnapshot) => {
-      setPlayer(
-        querySnapshot.docs.map(doc => ({...doc.data(), id: doc.id, }))
-      )
-    }); return unsubscribe
-  }, [])
-
+  const [water, fertilizer, spin, seed, insurance, soil] = features;
 
   let [gold, setGold] = useState(0);
   let [harvest, setHarvest] = useState(0);
   let [insuranceQty,setInsuranceQty] = useState(0); 
   const [feedBackMsg, setfeedBackMsg] = useState("");
-
-  
-  useEffect(() => {
-    setGold(player[0].goldpoint)
-    setHarvest(player[0].harvestpoint)
-  }, [player])
-  
 
   const getAddress = async () => {
     const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
@@ -56,7 +41,23 @@ function App() {
     getAddress();
   }, []);
   
- 
+
+  useEffect(() => {
+    const q = query(collection(db, "users"));
+    const unsubscribe = onSnapshot(q, (querySnapshot) => {
+      setPlayer(
+        querySnapshot.docs.map(doc => ({...doc.data(), id: doc.id, }))
+      )
+    }); return unsubscribe
+  }, [])
+
+  
+  useEffect(() => {
+    setGold(player[0].goldpoint)
+    setHarvest(player[0].harvestpoint)
+  }, [player])
+  
+
   const tokenHandler = () => {
     setShow(true);
     getBalance();
@@ -69,7 +70,7 @@ function App() {
 
 
   const hurricaneDamage = 200;
-  const insurancePayout = 150;
+  const insurancePayout = insurance.benefit; 
 
   const hurricaneHandler = () => {
     setFeatureOnClick('./images/hurricane.png');
@@ -83,9 +84,9 @@ function App() {
   };
 
 
-  const insuranceCost = 5;
-  const waterCost = 20;
-  const waterBenefit =20;
+  const insuranceCost = insurance.cost;
+  const waterCost = water.cost;
+  const waterBenefit = water.benefit;
 
   const sufficentGold = (itemCost) => {
     if (gold-itemCost>-1) {

@@ -1,14 +1,17 @@
 
+
 const featureData = [
   {
     id: 1,
     title: 'water',
     img: './images/icon_water.png',
     onClicked: './images/water.png',
+    cost: 20,
+    benefit: 30,
   },
   {
     id: 2,
-    title: 'fertilzer',
+    title: 'fertilizer',
     img: './images/icon_fertilizer.jpg',
     onClicked: './images/icon_fertilizer.jpg',
   },
@@ -29,7 +32,9 @@ const featureData = [
     title: 'insurance',
     img: './images/icon_insurance2.jpg',
     onClicked: './images/insurance.png',
-    },
+    cost: 5,
+    benefit: 150,
+  },
   {
     id: 6,
     title: 'soil',
